@@ -1,0 +1,33 @@
+---
+
+- name: Converge
+  hosts: all
+  become: true
+  pre_tasks:
+
+    - name: Make sure that deps are installed
+      apt:
+        name: ['build-essential', 'autoconf', 'libncurses5-dev', 'openssl', 'libssl-dev', 'fop', 'xsltproc', 'unixodbc-dev', 'git', 'make', 'automake', 'gcc']
+        state: latest
+        update_cache: true
+      when: ansible_distribution == 'Ubuntu'
+      tags:
+        - skip_ansible_lint
+
+    - name: Make sure that deps are installed
+      yum:
+        name: ['openssl-devel', 'automake', 'autoconf', 'ncurses-devel', 'gcc', 'perl', 'fop']
+        state: latest
+        update_cache: true
+      when: ansible_distribution == 'CentOS'
+      tags:
+        - skip_ansible_lint
+
+    - name: apt-get update
+      apt:
+        update_cache: true
+      when: ansible_facts['os_family'] == "Debian"
+      changed_when: false
+
+  roles:
+    - role: zerodowntime.erlang_kerl

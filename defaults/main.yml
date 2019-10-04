@@ -1,0 +1,33 @@
+---
+# zerodowntime.erlang_kerl/defaults/main.yml
+
+#? erlang_kerl__repo_url:
+#?   type: string
+#?   description: URL path to the repo
+#?   required: True
+erlang_kerl__repo_url: "https://raw.githubusercontent.com/kerl/kerl/master/kerl"
+
+#? erlang_kerl__repo_dest:
+#?   type: string
+#?   description: Absolute path of where to download the file to
+#?   required: True
+erlang_kerl__repo_dest: "/usr/bin/kerl"
+
+#? erlang_kerl__build_version:
+#?   type: string
+#?   description: Version of erlang to be installed
+#?   required: True
+#?   default: example_overide
+erlang_kerl__build_version: '20.1'
+
+#? erlang_kerl__build_dir:
+#?   type: string
+#?   description: Path to the Erlang installation directory
+#?   required: True
+erlang_kerl__build_dir: /usr/local/erlang
+
+#? erlang_kerl__build_path:
+#?   type: string
+#?   description: Absolute path where erlang will be installed
+#?   required: True
+erlang_kerl__build_path: "{{ erlang_kerl__build_dir }}/{{ erlang_kerl__build_version }}"

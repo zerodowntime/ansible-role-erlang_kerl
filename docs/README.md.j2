@@ -1,0 +1,30 @@
+{{ auto_docs.title() }}
+
+{{ auto_docs.description() }}
+
+
+{{ auto_docs.requirements() }}
+
+###### Additional required packages
+
+ - Ubuntu: 'build-essential', 'autoconf', 'libncurses5-dev', 'openssl', 'libssl-dev', 'fop', 'xsltproc', 'unixodbc-dev', 'git', 'make', 'automake', 'gcc'
+ - CentOS: 'openssl-devel', 'automake', 'autoconf', 'ncurses-devel', 'gcc', 'perl', 'fop'
+
+{{ auto_docs.platforms() }}
+
+{{ auto_docs.defaults() }}
+
+{{ auto_docs.vars() }}
+
+## Example Playbook
+
+```yaml
+    - hosts: all
+      become: true
+      roles:
+        - role: zerodowntime.erlang_kerl
+```
+
+{{ auto_docs.license() }}
+
+{{ auto_docs.contributors() }}

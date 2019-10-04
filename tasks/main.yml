@@ -1,0 +1,37 @@
+---
+# zerodowntime.erlang_kerl/tasks/main.yml
+
+- name: Check if kerl is already installed
+  stat:
+    path: "{{ erlang_kerl__repo_dest }}"
+  register: __kerl
+
+- name: Download kerl repository
+  get_url:
+    url: "{{ erlang_kerl__repo_url }}"
+    dest: "{{ erlang_kerl__repo_dest }}"
+    mode: 0744
+  when: not __kerl.stat.exists
+
+- name: Check if erlang "{{ erlang_kerl__build_version }}" is builded
+  stat:
+    path: "{{ erlang_kerl__build_path }}/bin/erl"
+  register: __erlang_build
+
+- name: Install erlang
+  block:
+    - name: Create erlang installation dir
+      file:
+        path: "{{ erlang_kerl__build_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Update releases
+      command: kerl update releases
+
+    - name: Build erlang "{{ erlang_kerl__build_version }}"
+      command: "kerl build {{ erlang_kerl__build_version }} {{ erlang_kerl__build_version }}"
+
+    - name: Install erlang "{{ erlang_kerl__build_version }}"
+      command: "kerl install {{ erlang_kerl__build_version }} {{ erlang_kerl__build_path }}"
+  when: not __erlang_build.stat.exists
